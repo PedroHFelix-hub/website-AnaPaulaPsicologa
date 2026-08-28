@@ -1,0 +1,20 @@
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.vscode/*.local.json
+.vscode/Thumbs.db
+*.sync-conflict-*
+*.partial
+*.download
+# Logs
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+~$*
+.env
