@@ -35,10 +35,9 @@
 
 > A origem em educação não é ruído: explica um jeito de trabalhar (didático, orientado a processo) e é material de conteúdo, não só linha de currículo.
 
-**[CONFIRMAR]** Grafia exata do nome, nomes por extenso das instituições, e se ela quer o CRP exibido no cabeçalho ou apenas no rodapé.
 **[D6 — DECIDIDO]** O site é **da Ana Paula, pessoa-profissional**. Não é o site da Ampla.mente.
 Tom em primeira pessoa, foto e nome dela em primeiro plano. A Ampla.mente aparece como vínculo profissional e como destino de encaminhamento (ver RF03c) — nunca como marca principal.
-**[CONFIRMAR]** Se a Ampla.mente vai ser citada nominalmente, a PJ precisa estar regular no CRP e ela é a responsável técnica. Confirmar com ela antes de publicar.
+A Ampla.mente vai ser citada nominalmente, a PJ precisa estar regular no CRP e ela é a responsável técnica. Confirmado.
 
 ---
 
