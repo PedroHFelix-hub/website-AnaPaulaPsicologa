@@ -10,13 +10,6 @@
    está — virar token só poluiria o sistema.
    ============================================================ */
 
-/* ------------------------------------------------------------
-   1. TOKENS
-   Nomes em inglês porque toda a documentação, biblioteca e
-   ferramenta que você vai usar está em inglês. O conteúdo do
-   site é em português; o código, não.
-   ------------------------------------------------------------ */
-
 :root {
   color-scheme: light;
 
@@ -26,35 +19,20 @@
      Camada 1 (primitivos): a paleta crua. Uma cor e nada mais.
      Camada 2 (semânticos): a FUNÇÃO na interface.
 
-     Por que separar: botão e link usam o mesmo verde hoje. No dia
-     em que só o botão precisar mudar, você altera um token
-     semântico em vez de caçar ocorrências pelo CSS inteiro.
-     Regra de nome: o token semântico diz PARA QUE SERVE, nunca
-     que cor é. `--color-link` é bom; `--color-green-link` é ruim
-     mesmo enquanto o link for verde.
-
-     Só use primitivo direto num componente se a cor ali não tiver
-     função nenhuma no sistema. Na dúvida, crie o semântico.
-
-     HSL de propósito: matiz, saturação, luminosidade. Em hex você
-     não enxerga que duas cores são a mesma em luminosidades
-     diferentes; em HSL, enxerga — e contraste se resolve mexendo
-     só no terceiro número.
-
      Neutros com matiz quente (30-40) resolvem a tensão entre
-     D7 (destaque frio) e D10 (não pode transmitir frieza).
+     (destaque frio) e (não pode transmitir frieza).
      ----------------------------------------------------------- */
 
   /* CAMADA 1 — primitivos */
-  --warm-50: hsl(40 33% 97%);    /* off-white quente, nunca #fff */
+  --warm-50: hsl(40 33% 97%);    
   --warm-100: hsl(40 25% 94%);
   --warm-200: hsl(40 15% 86%);
   --warm-600: hsl(30 6% 38%);
-  --warm-900: hsl(30 10% 16%);   /* quase-preto quente, nunca #000 */
+  --warm-900: hsl(30 10% 16%);   
 
   --sage-100: hsl(150 18% 90%);
   --sage-200: hsl(155 20% 78%);
-  --sage-700: hsl(155 22% 34%);  /* contraste verificado: 5.73:1 sobre --warm-50 */
+  --sage-700: hsl(155 22% 34%);  
   --sage-800: hsl(155 25% 26%);
 
   --red-50: hsl(5 60% 96%);
@@ -64,32 +42,26 @@
   --color-bg: var(--warm-50);
   --color-surface: var(--warm-100);
   --color-border: var(--warm-200);
-  --color-text: var(--warm-900);        /* 13.61:1 sobre o fundo */
-  --color-text-muted: var(--warm-600);  /* 5.76:1 sobre o fundo */
+  --color-text: var(--warm-900);        
+  --color-text-muted: var(--warm-600);  
 
   --color-link: var(--sage-700);
   --color-link-hover: var(--sage-800);
 
   --color-button-bg: var(--sage-700);
   --color-button-bg-hover: var(--sage-800);
-  --color-button-text: var(--warm-50);  /* 6.07:1 sobre o botão */
+  --color-button-text: var(--warm-50);  
 
-  --color-section-bg: var(--sage-100);  /* fundo de seção destacada */
-  --color-detail: var(--sage-200);      /* SÓ borda e detalhe. Nunca texto. */
+  --color-section-bg: var(--sage-100); 
+  --color-detail: var(--sage-200);      
 
   --color-focus: var(--sage-700);
 
-  /* Erro — validação de formulário (R2). Vermelho dessaturado:
-     mensagem de erro num site de psicologia não pode soar alarme. */
+
   --color-error: var(--red-600);
   --color-error-bg: var(--red-50);
 
-  /* --- TIPOGRAFIA --------------------------------------------
-     Escala modular de razão 1.25 a partir de 1rem.
-     Escala existe para eliminar decisão: em vez de escolher
-     entre 17, 18 ou 19px toda vez, você escolhe um degrau.
-     Consistência não é estética, é ausência de arbitrariedade.
-     ----------------------------------------------------------- */
+  /* --- TIPOGRAFIA --------------------------------------------*/
 
   --font-heading: "Lora", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -99,26 +71,13 @@
   --text-base: 1rem;      /* 16px — nunca menos que isso em texto corrido */
   --text-md: 1.25rem;     /* subtítulo, destaque */
 
-  /* Os três degraus maiores são FLUIDOS: crescem junto com a
-     largura da tela. Um título de 39px é imponente num celular
-     de 360px e modesto num monitor de 1920px — tamanho fixo não
-     entrega a mesma hierarquia nos dois.
 
-     clamp(mínimo, preferido, máximo):
-       - mínimo: nunca menor que isso (telas pequenas)
-       - preferido: cresce com a viewport (o 'vw')
-       - máximo: para de crescer (telas grandes)
-
-     ACESSIBILIDADE: o valor preferido SEMPRE tem uma parte em
-     rem. Se fosse só 'vw', o texto ignoraria o zoom do usuário —
-     alguém que dá zoom para enxergar não veria diferença nenhuma.
-     A parte em rem é o que mantém o zoom funcionando. */
   --text-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.953rem);
   --text-xl: clamp(1.6rem, 1.3rem + 1.35vw, 2.441rem);
   --text-2xl: clamp(2rem, 1.55rem + 2vw, 3.052rem);  /* título de página */
 
-  /* Sem unidade, sempre. Com unidade, o valor calculado é
-     herdado pelos filhos e a entrelinha quebra. */
+
+    
   --leading-tight: 1.15;    /* títulos grandes */
   --leading-snug: 1.35;     /* títulos médios */
   --leading-normal: 1.6;    /* texto corrido */
@@ -129,11 +88,7 @@
   --weight-semibold: 600;
 
   /* --- ESPAÇAMENTO -------------------------------------------
-     Base de 4px (0.25rem). Todo espaçamento do site é múltiplo
-     disso. Motivo: espaçamentos aleatórios (13px aqui, 27px ali)
-     são o que faz um layout parecer "quase certo" sem que
-     ninguém saiba dizer o porquê.
-     ----------------------------------------------------------- */
+*/
 
   --space-1: 0.25rem;   /* 4px  */
   --space-2: 0.5rem;    /* 8px  */
