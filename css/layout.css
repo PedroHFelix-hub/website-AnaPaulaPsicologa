@@ -1,0 +1,266 @@
+/* ============================================================
+   LAYOUT.CSS — ONDE as coisas ficam.
+   Largura, colunas, espaçamento entre blocos, proporções.
+   Nada de cor, borda ou fonte: isso é componentes.css.
+
+   CONCEITO: a página é uma ficha.
+   Cada seção tem um RÓTULO à esquerda (a trilha) e o CONTEÚDO à
+   direita — a mesma anatomia de um registro preenchido. Em tela
+   estreita o rótulo sobe para cima do conteúdo, que é como um
+   formulário se comporta no papel também.
+
+   Breakpoints:
+     720px  — a trilha lateral aparece
+     1040px — dobra e "sobre" em duas colunas
+   ============================================================ */
+
+.container {
+  width: min(100% - var(--space-5) * 2, var(--width-container));
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------
+   1. FAIXAS
+   A página alterna dois chãos: tinta (estrutura) e papel
+   (leitura). As faixas de tinta são as bordas do documento —
+   dobra no topo, rodapé embaixo.
+   ------------------------------------------------------------ */
+
+.band-ink {
+  background-color: var(--color-bg-invert);
+  color: var(--color-text-invert);
+}
+
+/* ------------------------------------------------------------
+   2. DOBRA
+   ------------------------------------------------------------ */
+
+.hero {
+  padding-block: var(--space-8) var(--space-9);
+}
+
+.hero__grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.hero__copy > * + * {
+  margin-block-start: var(--space-5);
+}
+
+@media (min-width: 1040px) {
+  .hero {
+    padding-block: var(--space-9) var(--space-10);
+  }
+
+  .hero__grid {
+    /* Assimétrico: o texto manda, o registro sustenta.
+       Duas colunas iguais partiriam a dobra ao meio e o olho
+       não saberia por onde começar. */
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: start;
+    gap: var(--space-9);
+  }
+
+  /* Páginas internas: a dobra tem só texto. Mantém a mesma
+     proporção da home em vez de esticar a linha até a borda. */
+  .hero__grid--single {
+    grid-template-columns: minmax(0, 1.1fr) 0.9fr;
+  }
+}
+
+/* Dobra reduzida: usada no 404, onde não há o que sustentar. */
+.hero--compact {
+  padding-block: var(--space-8) var(--space-8);
+}
+
+@media (min-width: 1040px) {
+  .hero--compact {
+    padding-block: var(--space-9) var(--space-9);
+  }
+}
+
+/* ------------------------------------------------------------
+   3. SEÇÕES — trilha + conteúdo
+   ------------------------------------------------------------ */
+
+.section {
+  padding-block: var(--space-8);
+  border-block-start: 1px solid var(--color-border);
+}
+
+/* A primeira seção depois da dobra não precisa de filete: a
+   troca de tinta para papel já é a separação. */
+.hero + .section {
+  border-block-start: 0;
+}
+
+.section__grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.section__body > * + * {
+  margin-block-start: var(--space-5);
+}
+
+@media (min-width: 720px) {
+  .section {
+    padding-block: var(--space-9);
+  }
+
+  .section__grid {
+    grid-template-columns: var(--width-rail) minmax(0, 1fr);
+    gap: var(--space-7);
+  }
+
+  /* A trilha acompanha a leitura em seções longas e para no
+     fim da seção. align-self:start é o que permite o sticky —
+     sem ele o item estica e não há o que grudar. */
+  .rail {
+    position: sticky;
+    top: var(--space-6);
+    align-self: start;
+  }
+}
+
+/* ------------------------------------------------------------
+   4. SOBRE
+   ------------------------------------------------------------ */
+
+.about {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.about__copy > * + * {
+  margin-block-start: var(--space-4);
+}
+
+@media (min-width: 1040px) {
+  .about {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    align-items: start;
+    gap: var(--space-8);
+  }
+}
+
+/* Retrato na dobra das páginas internas. Ocupa a coluna que na
+   home é do registro — mesma estrutura, conteúdo diferente. */
+.hero__portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.about__image img {
+  width: 100%;
+  /* O arquivo é quadrado. Retrato quadrado ocupa altura demais
+     e empurra o texto; 4/5 é a proporção de retrato impresso.
+     object-fit recorta sem distorcer. */
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------------
+   5. ETAPAS
+   Empilhadas em todas as larguras, de propósito: é uma
+   sequência. Em três colunas viraria três opções paralelas, e a
+   forma contradiria o conteúdo.
+   ------------------------------------------------------------ */
+
+.steps {
+  display: grid;
+  gap: var(--space-6);
+  max-width: var(--width-text);
+}
+
+.steps__item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+/* ------------------------------------------------------------
+   5b. TRAJETÓRIA
+   Ano à esquerda, cargo à direita — a mesma anatomia da ficha,
+   repetida numa escala menor. Ordem crescente: é uma trajetória,
+   e trajetória se lê do começo.
+   ------------------------------------------------------------ */
+
+.timeline {
+  display: grid;
+  gap: var(--space-5);
+  max-width: var(--width-text);
+}
+
+.timeline__item {
+  display: grid;
+  gap: var(--space-1);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--color-border);
+}
+
+@media (min-width: 560px) {
+  .timeline__item {
+    grid-template-columns: 8rem minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+}
+
+/* ------------------------------------------------------------
+   6. ADEQUAÇÃO
+   ------------------------------------------------------------ */
+
+.fit {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 1040px) {
+  .fit {
+    grid-template-columns: 1fr 1fr;
+    /* Sem isto os cartões esticam até a altura do mais alto e o
+       menor fica com um vazio esquisito embaixo. */
+    align-items: start;
+    gap: var(--space-6);
+  }
+}
+
+/* ------------------------------------------------------------
+   7. CONTATO
+   ------------------------------------------------------------ */
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+}
+
+/* ------------------------------------------------------------
+   8. RODAPÉ
+   ------------------------------------------------------------ */
+
+.footer__grid {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-8);
+}
+
+@media (min-width: 720px) {
+  .footer__grid {
+    grid-template-columns: var(--width-rail) minmax(0, 1fr);
+    column-gap: var(--space-7);
+    align-items: start;
+  }
+
+  /* O copyright volta para a coluna do conteúdo, alinhado com o
+     aviso de emergência acima dele. */
+  .footer__copy {
+    grid-column: 2;
+  }
+}

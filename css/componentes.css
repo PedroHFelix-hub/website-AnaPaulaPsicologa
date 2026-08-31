@@ -1,0 +1,542 @@
+/* ============================================================
+   COMPONENTES.CSS — COMO as coisas parecem.
+   Cor, filete, tipografia de componente, estados.
+
+   Regra: todo elemento interativo tem quatro estados —
+   default, :hover, :focus-visible e :active.
+
+   O acento (--marker) aparece em três lugares e só nesses:
+   a palavra destacada da dobra, o filete do registro e o
+   indicador do acordeão. Acento espalhado deixa de ser acento.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. SKIP LINK
+   Invisível para quem enxerga, alcançável por teclado.
+   display:none NÃO serve: elemento oculto assim sai da ordem de
+   foco, e o link deixaria de existir para quem ele foi feito.
+   ------------------------------------------------------------ */
+
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link:focus-visible {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 10;
+  width: auto;
+  height: auto;
+  clip-path: none;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------
+   2. RÓTULO EM MONO
+   A face mono aparece só aqui: nome de campo, trilha, etiqueta.
+   É o vocabulário de uma ficha preenchida, não decoração.
+   Caixa alta em texto curto exige abrir o espaçamento entre
+   letras — sem isso, vira um bloco cinza ilegível.
+   ------------------------------------------------------------ */
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+}
+
+.band-ink .label {
+  color: var(--color-text-invert-muted);
+}
+
+/* ------------------------------------------------------------
+   3. CABEÇALHO
+   ------------------------------------------------------------ */
+
+.site-header {
+  background-color: var(--color-bg);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.header-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-5);
+  padding-block: var(--space-4);
+}
+
+.brand {
+  display: grid;
+  gap: 2px;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.brand__name {
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.brand__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+/* Três links não justificam esconder a navegação atrás de um
+   menu hambúrguer: seria custo de interação sem benefício.
+   Em tela estreita eles simplesmente descem para a linha
+   seguinte. */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-5);
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* área mínima de toque */
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.site-nav a:hover,
+.site-nav a:active {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+/* Atalho de quem chegou por indicação (fluxo F3) e quer falar
+   com a Ana em segundos. Peso, não um segundo botão. */
+.site-nav__cta {
+  font-weight: var(--weight-semibold);
+  border-block-end: 2px solid var(--color-text);
+}
+
+/* A página atual precisa ser visível para quem enxerga, não só
+   anunciada para quem usa leitor de tela. O aria-current no HTML
+   serve aos dois — um atributo, duas funções. */
+.site-nav a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+  border-block-end: 2px solid var(--marker);
+}
+
+/* ------------------------------------------------------------
+   4. DOBRA
+   ------------------------------------------------------------ */
+
+.lead {
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-invert-muted);
+  max-width: 46ch;
+}
+
+.hero__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-invert-muted);
+}
+
+/* A única palavra colorida da página. Sobre tinta, o marcador
+   é cor de texto; sobre papel, vira um traço de marca-texto
+   atrás da palavra. */
+.mark {
+  color: var(--marker);
+}
+
+.section .mark {
+  color: inherit;
+  background-image: linear-gradient(transparent 62%, var(--marker) 62%);
+}
+
+/* Entrada em sequência: título, apoio, registro. Um movimento
+   orquestrado comunica ordem de leitura; vários efeitos soltos
+   só poluem. Some por completo para quem pediu redução de
+   movimento (regra global no base.css). */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__copy > *,
+  .record {
+    animation: rise var(--transition) both;
+  }
+  .hero__copy > *:nth-child(1) { animation-delay: 60ms; }
+  .hero__copy > *:nth-child(2) { animation-delay: 120ms; }
+  .hero__copy > *:nth-child(3) { animation-delay: 180ms; }
+  .hero__copy > *:nth-child(4) { animation-delay: 240ms; }
+  .record { animation-delay: 320ms; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ------------------------------------------------------------
+   5. O REGISTRO — elemento de assinatura
+
+   É o artefato mais característico da TCC: um pensamento
+   automático e as perguntas que o examinam. Mostra o método em
+   vez de descrevê-lo.
+   Só perguntas, nunca respostas ou resultados — o site não
+   diagnostica e não promete.
+   ------------------------------------------------------------ */
+
+.record {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+}
+
+@media (min-width: 720px) {
+  .record { padding: var(--space-6); }
+}
+
+.record__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+  padding-block-end: var(--space-4);
+  border-block-end: 2px solid var(--marker);
+}
+
+/* A serifada aparece SÓ aqui. O tipo encoda quem fala:
+   sans é a voz do site, serifada é a voz interna de quem lê. */
+.record__thought {
+  margin-block: var(--space-5);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+}
+
+.record__note {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.record__questions {
+  margin-block-start: var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.record__row {
+  display: grid;
+  gap: var(--space-1);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--color-border);
+}
+
+.record__row dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text-muted);
+}
+
+.record__row dd {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------
+   6. LISTAS
+
+   ATENÇÃO: list-style:none faz o Safari com VoiceOver PARAR de
+   anunciar "lista com 5 itens". O role="list" no HTML devolve
+   essa semântica. Ele só é redundante enquanto houver marcador
+   nativo — a partir daqui, não é.
+   ------------------------------------------------------------ */
+
+.marked-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.marked-list li {
+  position: relative;
+  padding-inline-start: var(--space-6);
+  max-width: var(--width-text);
+}
+
+/* Marcador próprio: um filete curto, do mesmo vocabulário dos
+   filetes que separam as seções. Conteúdo de ::before não é
+   lido como texto pelos leitores de tela. */
+.marked-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.75em;
+  width: var(--space-4);
+  height: 1px;
+  background-color: var(--color-text-muted);
+}
+
+.note {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ------------------------------------------------------------
+   7. ETAPAS
+   ------------------------------------------------------------ */
+
+.steps {
+  list-style: none;
+  padding: 0;
+}
+
+.steps__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.steps h3 {
+  margin-block-end: var(--space-2);
+}
+
+/* ------------------------------------------------------------
+   7b. TRAJETÓRIA
+   O ano em mono, como um campo de ficha. A mesma lógica dos
+   rótulos: mono só onde há dado, nunca em texto corrido.
+   ------------------------------------------------------------ */
+
+.timeline {
+  list-style: none;
+  padding: 0;
+}
+
+.timeline__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums; /* dígitos alinham entre linhas */
+}
+
+.timeline__role {
+  font-weight: var(--weight-medium);
+}
+
+.timeline__place {
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   8. CARTÕES
+
+   Filete, não sombra. Sombra diz que o elemento FLUTUA sobre a
+   página; o cartão não flutua, ele delimita. E sombra forte com
+   canto muito arredondado é a assinatura do site genérico.
+   ------------------------------------------------------------ */
+
+.fit__card {
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.fit__card > * + * {
+  margin-block-start: var(--space-4);
+}
+
+/* A variação é secundária: fundo diferente, sem filete.
+   Hierarquia por peso, não por destaque. */
+.fit__card--alt {
+  background-color: var(--color-surface);
+  border-color: transparent;
+}
+
+/* ------------------------------------------------------------
+   9. FAQ
+   O marcador nativo do summary é diferente em cada navegador e
+   não aceita estilo. Removemos e desenhamos o nosso.
+   ------------------------------------------------------------ */
+
+.faq {
+  border-block-start: 1px solid var(--color-border);
+}
+
+.faq details {
+  border-block-end: 1px solid var(--color-border);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding-block: var(--space-4);
+  cursor: pointer;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  list-style: none;
+  transition: color var(--transition-fast);
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary:hover {
+  color: var(--color-text-muted);
+}
+
+/* Indicador: um "+" que gira 45° e vira "×". Uma forma, dois
+   significados — nada decorativo. */
+.faq summary::after {
+  content: "+";
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background-color: var(--marker);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  transition: transform var(--transition);
+}
+
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq__answer {
+  padding-block-end: var(--space-5);
+  max-width: var(--width-text);
+  color: var(--color-text-muted);
+}
+
+/* ------------------------------------------------------------
+   10. AÇÕES
+   ------------------------------------------------------------ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: background-color var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--color-button-bg-hover);
+  color: var(--color-button-text);
+}
+
+/* Sobre a tinta, o botão inverte: o acento vira a superfície. */
+.band-ink .button {
+  background-color: var(--marker);
+  color: var(--color-text);
+}
+
+/* Sobre a tinta o contorno de foco é o marcador — que aqui vira
+   o próprio fundo do botão. Contorno invisível não é contorno. */
+.band-ink .button:focus-visible {
+  outline-color: var(--color-text-invert);
+}
+
+/* Deslocamento de 1px no clique: confirmação física de que o
+   toque registrou. */
+.button:active {
+  transform: translateY(1px);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  border-block-end: 1px solid var(--color-border);
+  transition: border-color var(--transition-fast);
+}
+
+.link-arrow:hover,
+.link-arrow:active {
+  border-block-end-color: var(--color-text);
+}
+
+.band-ink .link-arrow {
+  color: var(--color-text-invert);
+  border-block-end-color: var(--color-border-invert);
+}
+
+.band-ink .link-arrow:hover {
+  border-block-end-color: var(--marker);
+}
+
+/* ------------------------------------------------------------
+   11. RODAPÉ
+   ------------------------------------------------------------ */
+
+.site-footer a {
+  color: var(--color-text-invert);
+}
+
+.footer__name {
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+.footer__meta,
+.footer__copy {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-text-invert-muted);
+}
+
+/* Aviso de emergência.
+   Sem vermelho de alerta, de propósito: quem chega em crise não
+   precisa de mais alarme, e quem não está em crise não deve ser
+   assustado. O filete lateral dá destaque estrutural — o olho
+   encontra o bloco — sem carregar emoção.
+   O CVV continua sendo um tel: tocável no celular. */
+.footer__emergency {
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--marker);
+  font-size: var(--text-sm);
+  color: var(--color-text-invert-muted);
+  max-width: var(--width-text);
+}
+
+.footer__emergency a {
+  font-weight: var(--weight-semibold);
+}

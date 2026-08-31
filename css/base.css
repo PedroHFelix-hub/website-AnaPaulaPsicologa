@@ -1,152 +1,150 @@
 /* ============================================================
-   BASE.CSS — fundação do projeto
-   Contém: tokens (variáveis), reset e tipografia base.
-   NÃO contém: componentes, layout de página.
+   BASE.CSS — fundação
+   Tokens, reset e tipografia base.
 
-   Regra (revisada — a crítica do Pedro procedia):
-   token expressa uma DECISÃO de design; número mágico expressa um
-   AJUSTE local. Valor arbitrário que se repete deve virar token.
-   Ajuste óptico pontual (alinhar um ícone com -1px) fica onde
-   está — virar token só poluiria o sistema.
+   DIREÇÃO VISUAL
+   O sistema nasce do artefato mais característico da TCC: o
+   registro de pensamentos. Uma ficha estruturada, escrita à
+   mão, onde um pensamento é examinado por perguntas.
+   Daí vêm: os rótulos em mono, a trilha lateral, o marcador,
+   e a serifada reservada à fala interna.
+
+   Regra: token expressa DECISÃO; número mágico expressa AJUSTE.
    ============================================================ */
 
 :root {
   color-scheme: light;
 
   /* --- COR ---------------------------------------------------
-     Sistema em DUAS CAMADAS.
+     Dois chãos, não um.
 
-     Camada 1 (primitivos): a paleta crua. Uma cor e nada mais.
-     Camada 2 (semânticos): a FUNÇÃO na interface.
+     TINTA: faixas de estrutura (dobra, rodapé). Verde muito
+     escuro e dessaturado — o sálvia da decisão D9 deixou de ser
+     acento e virou o próprio fundo.
+     PAPEL: verde-acinzentado, não creme. Creme quente + serifada
+     de display é o clichê da categoria.
 
-     Neutros com matiz quente (30-40) resolvem a tensão entre
-     (destaque frio) e (não pode transmitir frieza).
+     Menos luminância também é decisão funcional: parte do
+     público navega de madrugada, no celular.
      ----------------------------------------------------------- */
 
-  /* CAMADA 1 — primitivos */
-  --warm-50: hsl(40 33% 97%);    
-  --warm-100: hsl(40 25% 94%);
-  --warm-200: hsl(40 15% 86%);
-  --warm-600: hsl(30 6% 38%);
-  --warm-900: hsl(30 10% 16%);   
+  /* Primitivos */
+  --ink-900: #12211c;   /* faixas escuras e texto sobre papel */
+  --ink-700: #24382f;   /* superfície escura secundária */
+  --ink-400: #4a5a52;   /* texto de apoio sobre papel */
+  --ink-200: #a9b6ae;   /* texto de apoio sobre tinta */
 
-  --sage-100: hsl(150 18% 90%);
-  --sage-200: hsl(155 20% 78%);
-  --sage-700: hsl(155 22% 34%);  
-  --sage-800: hsl(155 25% 26%);
+  --paper-100: #edeeea; /* chão da página */
+  --paper-50: #f7f8f5;  /* cartão sobre o papel */
+  --rule: #cfd4cb;      /* filetes e bordas */
+  --rule-dark: #354b40; /* filetes sobre tinta */
 
-  --red-50: hsl(5 60% 96%);
-  --red-600: hsl(5 55% 38%);
+  --marker: #dce49e;    /* único elemento cromático do sistema */
 
-  /* CAMADA 2 — semânticos */
-  --color-bg: var(--warm-50);
-  --color-surface: var(--warm-100);
-  --color-border: var(--warm-200);
-  --color-text: var(--warm-900);        
-  --color-text-muted: var(--warm-600);  
+  /* Semânticos — dizem PARA QUE SERVE, não que cor são */
+  --color-bg: var(--paper-100);
+  --color-surface: var(--paper-50);
+  --color-border: var(--rule);
+  --color-text: var(--ink-900);
+  --color-text-muted: var(--ink-400);
 
-  --color-link: var(--sage-700);
-  --color-link-hover: var(--sage-800);
+  --color-bg-invert: var(--ink-900);
+  --color-surface-invert: var(--ink-700);
+  --color-text-invert: var(--paper-100);
+  --color-text-invert-muted: var(--ink-200);
+  --color-border-invert: var(--rule-dark);
 
-  --color-button-bg: var(--sage-700);
-  --color-button-bg-hover: var(--sage-800);
-  --color-button-text: var(--warm-50);  
+  --color-link: var(--ink-900);
+  --color-link-hover: var(--ink-400);
 
-  --color-section-bg: var(--sage-100); 
-  --color-detail: var(--sage-200);      
+  --color-button-bg: var(--ink-900);
+  --color-button-text: var(--paper-100);
+  --color-button-bg-hover: var(--ink-700);
 
-  --color-focus: var(--sage-700);
+  --color-accent: var(--marker);
+  --color-focus: var(--ink-900);
+  --color-focus-invert: var(--marker);
 
+  --color-error: #8c2f28;
+  --color-error-bg: #f6e7e5;
 
-  --color-error: var(--red-600);
-  --color-error-bg: var(--red-50);
+  /* --- TIPOGRAFIA --------------------------------------------
+     Três faces, três papéis. O papel encoda significado:
 
-  /* --- TIPOGRAFIA --------------------------------------------*/
+     SANS   — a voz do site: estrutura, clareza, títulos.
+     SERIF  — SÓ pensamento citado. É a voz interna de quem lê.
+              Nunca usar para título ou interface.
+     MONO   — SÓ rótulo, campo e número. Vocabulário de ficha.
 
-  --font-heading: "Lora", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+     Plex Sans e Plex Mono são da mesma superfamília: combinam
+     por desenho, não por acaso.
+     ----------------------------------------------------------- */
 
-  --text-xs: 0.8rem;      /* 12.8px — rótulo, metadado. Usar pouco. */
-  --text-sm: 0.9rem;      /* legenda, texto de apoio */
-  --text-base: 1rem;      /* 16px — nunca menos que isso em texto corrido */
-  --text-md: 1.25rem;     /* subtítulo, destaque */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "Literata", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
 
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;  /* 17px: corpo um pouco maior, o site é de leitura */
+  --text-md: 1.25rem;
 
-  --text-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.953rem);
-  --text-xl: clamp(1.6rem, 1.3rem + 1.35vw, 2.441rem);
-  --text-2xl: clamp(2rem, 1.55rem + 2vw, 3.052rem);  /* título de página */
+  /* Fluidos. A parte em rem é obrigatória: só com ela o zoom
+     do usuário continua funcionando. */
+  --text-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --text-xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.6rem);
+  --text-2xl: clamp(2.2rem, 1.5rem + 3.2vw, 4.25rem);
 
+  --leading-tight: 1.03;   /* display grande fecha bastante */
+  --leading-snug: 1.22;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.72;
 
-    
-  --leading-tight: 1.15;    /* títulos grandes */
-  --leading-snug: 1.35;     /* títulos médios */
-  --leading-normal: 1.6;    /* texto corrido */
-  --leading-relaxed: 1.75;  /* blocos longos de leitura */
+  --tracking-tight: -0.025em;  /* display grande precisa fechar */
+  --tracking-wide: 0.12em;     /* mono em caixa alta precisa abrir */
 
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
 
-  /* --- ESPAÇAMENTO -------------------------------------------
-*/
+  /* --- ESPAÇAMENTO — base 4px -------------------------------- */
 
-  --space-1: 0.25rem;   /* 4px  */
-  --space-2: 0.5rem;    /* 8px  */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.5rem;    /* 24px */
-  --space-6: 2rem;      /* 32px */
-  --space-7: 3rem;      /* 48px */
-  --space-8: 4rem;      /* 64px */
-  --space-9: 6rem;      /* 96px */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
 
   /* --- FORMA -------------------------------------------------
-     Raios pequenos de propósito. Raio grande + sombra forte +
-     botão em formato de pílula é a assinatura visual do site
-     genérico. "Segurança e confiança" (D10) pedem forma sóbria.
+     3px. Nem pílula (genérico), nem canto reto absoluto (a
+     estética de jornal também virou clichê). Ficha de papel
+     tem canto quase reto.
+     Não há sombra no sistema: a página é feita de camadas de
+     papel, não de objetos flutuando.
      ----------------------------------------------------------- */
 
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;   /* teto. Não existe --radius-full aqui. */
+  --radius: 3px;
 
-  /* Uma sombra só, e sutil. Sombra indica que algo FLUTUA sobre
-     a página (menu aberto, diálogo). Não é decoração. */
-  --shadow-raised: 0 1px 2px hsl(30 10% 16% / 0.06),
-                   0 4px 12px hsl(30 10% 16% / 0.06);
-
-  /* --- MEDIDAS -----------------------------------------------  */
-
-  --width-text: 65ch;    /* medida de leitura: 45-75 caracteres */
-  --width-container: 72rem;
-
-  /* --- MOVIMENTO ---------------------------------------------  */
+  --width-text: 62ch;
+  --width-container: 78rem;
+  --width-rail: 9rem;
 
   --transition-fast: 120ms ease;
-  --transition: 200ms ease;
+  --transition: 220ms cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
-/* ------------------------------------------------------------
-   BREAKPOINTS — por que não estão acima?
-
-   Custom properties NÃO funcionam em media queries:
-       @media (min-width: var(--bp-md))   <-- não funciona
-   A media query é avaliada antes da cascata resolver variáveis.
-
-   Então ficam como convenção documentada, escritos à mão:
-       600px  — a partir de tablet
-       900px  — a partir de desktop
-   Mobile-first: o estilo base é o de tela pequena, e o PADRÃO é
-   crescer com min-width. max-width não é proibido (a crítica do
-   Pedro procede) — é legítimo quando a regra só vale mesmo abaixo
-   de um limite. O que causa caos é usar max-width para DESFAZER o
-   que uma min-width fez: viram duas regras brigando pela mesma
-   propriedade, e aí a cascata decide por você.
-   ------------------------------------------------------------ */
+/* BREAKPOINTS (custom properties não funcionam em media query,
+   então ficam como convenção escrita à mão):
+     720px  — trilha lateral aparece
+     1040px — dobra em duas colunas                            */
 
 /* ------------------------------------------------------------
-   2. RESET
-   Mínimo. Reset gigante zera coisas que você vai reescrever.
+   RESET
    ------------------------------------------------------------ */
 
 *,
@@ -159,8 +157,6 @@
   margin: 0;
 }
 
-/* Rolagem suave ao clicar em âncora — mas só para quem não
-   pediu redução de movimento (ver bloco final). */
 html {
   -webkit-text-size-adjust: 100%;
 }
@@ -169,14 +165,15 @@ body {
   min-height: 100svh;
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   font-weight: var(--weight-regular);
+  /* Sem isto, o Plex Sans fica levemente pesado em telas de
+     alta densidade. */
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Imagem é bloco e nunca estoura o contêiner.
-   Duas linhas que resolvem metade dos bugs de responsividade. */
 img,
 picture,
 svg,
@@ -186,7 +183,6 @@ video {
   height: auto;
 }
 
-/* Campos de formulário não herdam fonte por padrão. */
 input,
 button,
 textarea,
@@ -196,37 +192,38 @@ select {
 }
 
 /* ------------------------------------------------------------
-   3. TIPOGRAFIA BASE
+   TIPOGRAFIA BASE
    ------------------------------------------------------------ */
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-heading);
-  font-weight: var(--weight-medium);
-  line-height: var(--leading-tight);
-  text-wrap: balance; /* evita título com uma palavra órfã na última linha */
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
 }
 
-h1 { font-size: var(--text-2xl); }
-h2 { font-size: var(--text-xl); line-height: var(--leading-snug); }
-h3 { font-size: var(--text-lg); line-height: var(--leading-snug); }
-h4 { font-size: var(--text-md); line-height: var(--leading-snug); }
+h1 {
+  font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+}
+
+h2 { font-size: var(--text-xl); }
+h3 { font-size: var(--text-lg); letter-spacing: -0.015em; }
+h4 { font-size: var(--text-md); letter-spacing: -0.01em; }
 
 p {
   max-width: var(--width-text);
-  text-wrap: pretty; /* evita linha final com uma palavra só */
+  text-wrap: pretty;
 }
 
 a {
   color: var(--color-link);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-}
-
-a:hover {
-  color: var(--color-link-hover);
+  text-underline-offset: 0.22em;
 }
 
 strong {
@@ -234,20 +231,21 @@ strong {
 }
 
 /* ------------------------------------------------------------
-   4. ACESSIBILIDADE
+   ACESSIBILIDADE
    ------------------------------------------------------------ */
 
-/* :focus-visible aparece na navegação por TECLADO e não no clique
-   de mouse. NUNCA remova o contorno de foco sem colocar outro no
-   lugar: para quem navega por teclado, é o cursor. */
+/* Para quem navega por teclado, o contorno de foco É o cursor.
+   Nunca remover sem substituir. */
 :focus-visible {
   outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+  outline-offset: 3px;
 }
 
-/* Respeita quem configurou o sistema para reduzir movimento —
-   pessoas com enxaqueca, vertigem ou transtorno vestibular. */
+/* Sobre a tinta, o contorno escuro sumiria. */
+.band-ink :focus-visible {
+  outline-color: var(--color-focus-invert);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
